@@ -7,3 +7,6 @@ services:
    b:
      build: ./B
      container_name: UDP_B
+   c:
+     build: ./C
+     container_name: UDP_C

@@ -8,11 +8,17 @@ const HOST_B = 'b';
 
 const socket = dgram.createSocket('udp4');
 
-socket.on('message', (buf, rinfo) => {
-    console.log(rinfo.address + ':' + rinfo.port +' - ' + buf);
-    socket.send(buf, 0, buf.length, PORT_B, HOST_B, (err, bytes) => {
+var count = 0;
+
+setInterval(() => {
+    count++;
+    let data = {'c': count ,'i':[{'id':'string'}],'o':[],'t':Date.now()};
+    let json_str = JSON.stringify(data);
+    let message = new Buffer.from(json_str);
+    socket.send(message, 0, message.length, PORT_B, HOST_B, (err, bytes) => {
         if (err) throw err;
     });
-});
+}, 1000);
+
 
 socket.bind(PORT_A, HOST_A);
